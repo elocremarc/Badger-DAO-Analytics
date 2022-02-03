@@ -1,0 +1,440 @@
+[
+  {
+    "tokensTransferred": {
+      "0x2B5455aac8d64C14786c3a29858E43b5945819C0": [
+        {
+          "event": "TreeDistribution",
+          "token": "0x2B5455aac8d64C14786c3a29858E43b5945819C0",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x72c124014278372dca"
+          },
+          "transactionHash": "0x2ea93cf01f1cd25dce8d99bd687c5fc862d45cf49d925c21f9a2ea0fd529bb59",
+          "blockNumber": 13924211,
+          "gasSpent": "0.110066946919972705",
+          "timeStamp": 1641102150,
+          "priceUSD": "7.078",
+          "amountUSD": "14983.036"
+        }
+      ],
+      "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305": [
+        {
+          "event": "TreeDistribution",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x0d12a097c00079b421"
+          },
+          "transactionHash": "0x2ea93cf01f1cd25dce8d99bd687c5fc862d45cf49d925c21f9a2ea0fd529bb59",
+          "blockNumber": 13924211,
+          "gasSpent": "0.110066946919972705",
+          "timeStamp": 1641102150,
+          "priceUSD": 49.06768906720446,
+          "amountUSD": "11832.673"
+        },
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x0344a825f0001e6d08"
+          },
+          "transactionHash": "0x2ea93cf01f1cd25dce8d99bd687c5fc862d45cf49d925c21f9a2ea0fd529bb59",
+          "blockNumber": 13924211,
+          "gasSpent": "0.110066946919972705",
+          "timeStamp": 1641102150,
+          "priceUSD": 49.06768906720446,
+          "amountUSD": "2958.144"
+        }
+      ],
+      "0x49849C98ae39Fff122806C06791Fa73784FB3675": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x00"
+          },
+          "transactionHash": "0x2ea93cf01f1cd25dce8d99bd687c5fc862d45cf49d925c21f9a2ea0fd529bb59",
+          "blockNumber": 13924211,
+          "gasSpent": "0.110066946919972705",
+          "timeStamp": 1641102150,
+          "priceUSD": 47334.166519947205,
+          "amountUSD": "0.000"
+        }
+      ],
+      "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x25d9483ef13f8ff743"
+          },
+          "transactionHash": "0x2ea93cf01f1cd25dce8d99bd687c5fc862d45cf49d925c21f9a2ea0fd529bb59",
+          "blockNumber": 13924211,
+          "gasSpent": "0.110066946919972705",
+          "timeStamp": 1641102150,
+          "priceUSD": 5.3662530792975165,
+          "amountUSD": "3746.643"
+        }
+      ]
+    },
+    "blockNumber": "13924211",
+    "transactionHash": "0x2ea93cf01f1cd25dce8d99bd687c5fc862d45cf49d925c21f9a2ea0fd529bb59",
+    "gasSpent": "0.110066946919972705",
+    "timeStamp": "01-01",
+    "gasSpentUSD": 405.75107294919957,
+    "PerformanceFeeGovernanceTotal": 33520.496,
+    "TreeDistributionTotal": 26815.709000000003
+  },
+  {
+    "tokensTransferred": {
+      "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305": [
+        {
+          "event": "TreeDistribution",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x0dd4325d2113ba2d9f"
+          },
+          "transactionHash": "0x7ff16548a81dd62664b9db6876691c3e476d034eee28806bdcd772517d876271",
+          "blockNumber": 13950851,
+          "gasSpent": "0.14096841656601585",
+          "timeStamp": 1641458611,
+          "priceUSD": 42.80859572560447,
+          "amountUSD": "10920.387"
+        },
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x03750c974844ee8b67"
+          },
+          "transactionHash": "0x7ff16548a81dd62664b9db6876691c3e476d034eee28806bdcd772517d876271",
+          "blockNumber": 13950851,
+          "gasSpent": "0.14096841656601585",
+          "timeStamp": 1641458611,
+          "priceUSD": 42.80859572560447,
+          "amountUSD": "2730.118"
+        }
+      ],
+      "0x49849C98ae39Fff122806C06791Fa73784FB3675": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x00"
+          },
+          "transactionHash": "0x7ff16548a81dd62664b9db6876691c3e476d034eee28806bdcd772517d876271",
+          "blockNumber": 13950851,
+          "gasSpent": "0.14096841656601585",
+          "timeStamp": 1641458611,
+          "priceUSD": 48710.29787348592,
+          "amountUSD": "0.000"
+        }
+      ]
+    },
+    "blockNumber": "13950851",
+    "transactionHash": "0x7ff16548a81dd62664b9db6876691c3e476d034eee28806bdcd772517d876271",
+    "gasSpent": "0.14096841656601585",
+    "timeStamp": "01-06",
+    "gasSpentUSD": 501.4114387514891,
+    "PerformanceFeeGovernanceTotal": 13650.505000000001,
+    "TreeDistributionTotal": 10920.387
+  },
+  {
+    "tokensTransferred": {
+      "0x2B5455aac8d64C14786c3a29858E43b5945819C0": [
+        {
+          "event": "TreeDistribution",
+          "token": "0x2B5455aac8d64C14786c3a29858E43b5945819C0",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0xcef464ab97b083b568"
+          },
+          "transactionHash": "0xb42bbb6ba8f2291093617bede57e04005887b13f1355324bf1046970c381fb3f",
+          "blockNumber": 14007149,
+          "gasSpent": "0.20639036023273413",
+          "timeStamp": 1642210538,
+          "priceUSD": "6.503",
+          "amountUSD": "24826.113"
+        }
+      ],
+      "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305": [
+        {
+          "event": "TreeDistribution",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x2237d67ca1f88c5034"
+          },
+          "transactionHash": "0xb42bbb6ba8f2291093617bede57e04005887b13f1355324bf1046970c381fb3f",
+          "blockNumber": 14007149,
+          "gasSpent": "0.20639036023273413",
+          "timeStamp": 1642210538,
+          "priceUSD": 44.02732951683902,
+          "amountUSD": "27790.623"
+        },
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x088df59f287e23140d"
+          },
+          "transactionHash": "0xb42bbb6ba8f2291093617bede57e04005887b13f1355324bf1046970c381fb3f",
+          "blockNumber": 14007149,
+          "gasSpent": "0.20639036023273413",
+          "timeStamp": 1642210538,
+          "priceUSD": 44.02732951683902,
+          "amountUSD": "6947.645"
+        }
+      ],
+      "0x49849C98ae39Fff122806C06791Fa73784FB3675": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x00"
+          },
+          "transactionHash": "0xb42bbb6ba8f2291093617bede57e04005887b13f1355324bf1046970c381fb3f",
+          "blockNumber": 14007149,
+          "gasSpent": "0.20639036023273413",
+          "timeStamp": 1642210538,
+          "priceUSD": 42511.14228038382,
+          "amountUSD": "0.000"
+        }
+      ],
+      "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x45173b332e35f7c083"
+          },
+          "transactionHash": "0xb42bbb6ba8f2291093617bede57e04005887b13f1355324bf1046970c381fb3f",
+          "blockNumber": 14007149,
+          "gasSpent": "0.20639036023273413",
+          "timeStamp": 1642210538,
+          "priceUSD": 4.871209012065267,
+          "amountUSD": "6208.351"
+        }
+      ]
+    },
+    "blockNumber": "14007149",
+    "transactionHash": "0xb42bbb6ba8f2291093617bede57e04005887b13f1355324bf1046970c381fb3f",
+    "gasSpent": "0.20639036023273413",
+    "timeStamp": "01-14",
+    "gasSpentUSD": 672.1636355723473,
+    "PerformanceFeeGovernanceTotal": 65772.732,
+    "TreeDistributionTotal": 52616.736000000004
+  },
+  {
+    "tokensTransferred": {
+      "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305": [
+        {
+          "event": "TreeDistribution",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x28095a8558d6c3b9f0"
+          },
+          "transactionHash": "0x9d1576e515dc871d7a0efaa50b69406e67239e4f73c64ee7be9c3f9f2de4547f",
+          "blockNumber": 14033743,
+          "gasSpent": "0.155623693373425865",
+          "timeStamp": 1642565239,
+          "priceUSD": 40.78032513273714,
+          "amountUSD": "30118.064"
+        },
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x0a0256a15635b0ee7c"
+          },
+          "transactionHash": "0x9d1576e515dc871d7a0efaa50b69406e67239e4f73c64ee7be9c3f9f2de4547f",
+          "blockNumber": 14033743,
+          "gasSpent": "0.155623693373425865",
+          "timeStamp": 1642565239,
+          "priceUSD": 40.78032513273714,
+          "amountUSD": "7529.516"
+        }
+      ],
+      "0x49849C98ae39Fff122806C06791Fa73784FB3675": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x00"
+          },
+          "transactionHash": "0x9d1576e515dc871d7a0efaa50b69406e67239e4f73c64ee7be9c3f9f2de4547f",
+          "blockNumber": 14033743,
+          "gasSpent": "0.155623693373425865",
+          "timeStamp": 1642565239,
+          "priceUSD": 42212.41127775384,
+          "amountUSD": "0.000"
+        }
+      ]
+    },
+    "blockNumber": "14033743",
+    "transactionHash": "0x9d1576e515dc871d7a0efaa50b69406e67239e4f73c64ee7be9c3f9f2de4547f",
+    "gasSpent": "0.155623693373425865",
+    "timeStamp": "01-18",
+    "gasSpentUSD": 500.57807972305454,
+    "PerformanceFeeGovernanceTotal": 37647.58,
+    "TreeDistributionTotal": 30118.064
+  },
+  {
+    "tokensTransferred": {
+      "0x2B5455aac8d64C14786c3a29858E43b5945819C0": [
+        {
+          "event": "TreeDistribution",
+          "token": "0x2B5455aac8d64C14786c3a29858E43b5945819C0",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x018eb0c977782ca45fa9"
+          },
+          "transactionHash": "0xa00fbcf5eb9726f56cc2d23f6680371bbb68c0c1a02a873a553ce2da801787e1",
+          "blockNumber": 14059903,
+          "gasSpent": "0.126728266697593587",
+          "timeStamp": 1642914282,
+          "priceUSD": "4.240",
+          "amountUSD": "31183.262"
+        }
+      ],
+      "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305": [
+        {
+          "event": "TreeDistribution",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x345eca1817df19986b"
+          },
+          "transactionHash": "0xa00fbcf5eb9726f56cc2d23f6680371bbb68c0c1a02a873a553ce2da801787e1",
+          "blockNumber": 14059903,
+          "gasSpent": "0.126728266697593587",
+          "timeStamp": 1642914282,
+          "priceUSD": 30.516490978222734,
+          "amountUSD": "29480.792"
+        },
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x0d17b28605f7c6661a"
+          },
+          "transactionHash": "0xa00fbcf5eb9726f56cc2d23f6680371bbb68c0c1a02a873a553ce2da801787e1",
+          "blockNumber": 14059903,
+          "gasSpent": "0.126728266697593587",
+          "timeStamp": 1642914282,
+          "priceUSD": 30.516490978222734,
+          "amountUSD": "7370.190"
+        }
+      ],
+      "0x49849C98ae39Fff122806C06791Fa73784FB3675": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x00"
+          },
+          "transactionHash": "0xa00fbcf5eb9726f56cc2d23f6680371bbb68c0c1a02a873a553ce2da801787e1",
+          "blockNumber": 14059903,
+          "gasSpent": "0.126728266697593587",
+          "timeStamp": 1642914282,
+          "priceUSD": 37618.93416680716,
+          "amountUSD": "0.000"
+        }
+      ],
+      "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x8678c55e0b0cafd96a"
+          },
+          "transactionHash": "0xa00fbcf5eb9726f56cc2d23f6680371bbb68c0c1a02a873a553ce2da801787e1",
+          "blockNumber": 14059903,
+          "gasSpent": "0.126728266697593587",
+          "timeStamp": 1642914282,
+          "priceUSD": 3.1426503791468607,
+          "amountUSD": "7795.552"
+        }
+      ]
+    },
+    "blockNumber": "14059903",
+    "transactionHash": "0xa00fbcf5eb9726f56cc2d23f6680371bbb68c0c1a02a873a553ce2da801787e1",
+    "gasSpent": "0.126728266697593587",
+    "timeStamp": "01-22",
+    "gasSpentUSD": 324.97478699657887,
+    "PerformanceFeeGovernanceTotal": 75829.796,
+    "TreeDistributionTotal": 60664.054000000004
+  },
+  {
+    "tokensTransferred": {
+      "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305": [
+        {
+          "event": "TreeDistribution",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x3b1aec3bd0c9fd6051"
+          },
+          "transactionHash": "0x460ebe32bdfbfa63e0bf73fdf48baae782527a2014b54a45439670d4ab9d1349",
+          "blockNumber": 14087190,
+          "gasSpent": "0.107172082366174439",
+          "timeStamp": 1643279690,
+          "priceUSD": 26.80602275912473,
+          "amountUSD": "29226.553"
+        },
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x0ec6bb0ef4327f5814"
+          },
+          "transactionHash": "0x460ebe32bdfbfa63e0bf73fdf48baae782527a2014b54a45439670d4ab9d1349",
+          "blockNumber": 14087190,
+          "gasSpent": "0.107172082366174439",
+          "timeStamp": 1643279690,
+          "priceUSD": 26.80602275912473,
+          "amountUSD": "7306.625"
+        }
+      ],
+      "0x49849C98ae39Fff122806C06791Fa73784FB3675": [
+        {
+          "event": "PerformanceFeeGovernance",
+          "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+          "amount": {
+            "type": "BigNumber",
+            "hex": "0x00"
+          },
+          "transactionHash": "0x460ebe32bdfbfa63e0bf73fdf48baae782527a2014b54a45439670d4ab9d1349",
+          "blockNumber": 14087190,
+          "gasSpent": "0.107172082366174439",
+          "timeStamp": 1643279690,
+          "priceUSD": 35026.58505159277,
+          "amountUSD": "0.000"
+        }
+      ]
+    },
+    "blockNumber": "14087190",
+    "transactionHash": "0x460ebe32bdfbfa63e0bf73fdf48baae782527a2014b54a45439670d4ab9d1349",
+    "gasSpent": "0.107172082366174439",
+    "timeStamp": "01-27",
+    "gasSpentUSD": 264.76117159644957,
+    "PerformanceFeeGovernanceTotal": 36533.178,
+    "TreeDistributionTotal": 29226.553
+  }
+]

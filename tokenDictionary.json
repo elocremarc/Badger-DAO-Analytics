@@ -1,0 +1,45 @@
+[
+  {
+    "token": "0x64eda51d3Ad40D56b9dFc5554E06F94e1Dd786Fd",
+    "underlying": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "coinGeickoID": "tbtc",
+    "name": "Curve.fi tbtc/sbtcCrv",
+    "onChainPrice": false
+  },
+  {
+    "token": "0xfd05D3C7fe2924020620A8bE4961bBaA747e6305",
+    "underlying": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
+    "coinGeickoID": "convex-finance",
+    "name": "Badger Vested Escrow Convex Token",
+    "onChainPrice": false
+  },
+  {
+    "token": "0x2B5455aac8d64C14786c3a29858E43b5945819C0",
+    "underlying": "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7",
+    "name": "Badger Sett Convex CRV",
+    "coinGeickoID": "convex-crv",
+    "onChainPrice": true
+  },
+  {
+    "token": "0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3",
+    "underlying": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "name": "Curve.fi renBTC/wBTC/sBTC",
+    "coinGeickoID": "tbtc",
+    "onChainPrice": false
+  },
+  {
+    "token": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
+    "underlying": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "name": "Curve.fi renBTC/wBTC/sBTC",
+    "coinGeickoID": "tbtc",
+    "onChainPrice": false
+  },
+
+  {
+    "token": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+    "underlying": "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7",
+    "coinGeickoID": "convex-crv",
+    "name": "Convex CRV",
+    "onChainPrice": false
+  }
+]
