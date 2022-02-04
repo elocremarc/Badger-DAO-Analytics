@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.get("/strategies", (req, res) => {
+app.get("/strategies", (res) => {
   res.json(strategies);
 });
 
