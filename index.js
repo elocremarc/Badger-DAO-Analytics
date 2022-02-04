@@ -5,6 +5,8 @@ import axios from "axios";
 import ethers from "ethers";
 import decodeLogs from "./utils/decodeLogs.js";
 import getblockNumbers from "./utils/getBlockNumbers.js";
+import cors from "cors";
+import path from "path";
 const require = createRequire(import.meta.url);
 const strategies = require("./strategies.json");
 const tokenDictionary = require("./tokenDictionary.json");
@@ -13,7 +15,7 @@ const dataTest = require("./dataTest.json");
 import moment from "moment";
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 let BN = ethers.BigNumber.from;
 
@@ -30,6 +32,34 @@ const EVENTS = {
   PerformanceFeeGovernance:
     "0x7d9c11b977b58d20949545f69e59d50e907cf4ad8fdc98cab1eaabd76574f7cd",
 };
+
+const whitelist = [
+  "http://localhost:3000",
+  "http://localhost:5000",
+  "https://badger-dao-analytics-dashboard.herokuapp.com/",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("** Origin of request " + origin);
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable");
+      callback(null, true);
+    } else {
+      console.log("Origin rejected");
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+app.use(cors(corsOptions));
+
+if (process.env.NODE_ENV === "production") {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, "client/build")));
+  // Handle React routing, return all requests to React app
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 app.get("/strategies", (req, res) => {
   res.json(strategies);
