@@ -1,13 +1,15 @@
 import express from "express";
-import dotenv from "dotenv";
 import { createRequire } from "module";
 import axios from "axios";
 import ethers from "ethers";
 import decodeLogs from "./utils/decodeLogs.js";
 import getblockNumbers from "./utils/getBlockNumbers.js";
 import cors from "cors";
+import helmet from "helmet";
 import path from "path";
+import moment from "moment";
 import { fileURLToPath } from "url";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
@@ -15,13 +17,9 @@ const strategies = require("./strategies.json");
 const tokenDictionary = require("./tokenDictionary.json");
 const abi = require("./abi.json");
 const dataTest = require("./dataTest.json");
-import moment from "moment";
-
 const app = express();
-const port = process.env.PORT || 5000;
 
 let BN = ethers.BigNumber.from;
-
 const EtherScanKEY = process.env.YOUR_ETHERSCAN_API_KEY;
 
 const provider = new ethers.providers.AlchemyProvider(
@@ -36,10 +34,11 @@ const EVENTS = {
     "0x7d9c11b977b58d20949545f69e59d50e907cf4ad8fdc98cab1eaabd76574f7cd",
 };
 
+// ** MIDDLEWARE ** //
 const whitelist = [
   "http://localhost:3000",
-  "http://localhost:5000",
-  "https://badger-dao-analytics.herokuapp.com/",
+  "http://localhost:8080",
+  "https://shrouded-journey-38552.herokuapp.com",
 ];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -53,18 +52,10 @@ const corsOptions = {
     }
   },
 };
+app.use(helmet());
 app.use(cors(corsOptions));
 
-if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, "client/build")));
-  // Handle React routing, return all requests to React app
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
-
-app.get("/strategies", (res) => {
+app.get("/strategies", (req, res) => {
   res.json(strategies);
 });
 
@@ -84,8 +75,16 @@ app.get("/events", async (req, res) => {
   console.timeEnd(`FullEventFetch`);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, (req, res) => {
+  console.log(`server listening on port: ${PORT}`);
 });
 
 const getSingleEvents = async (
