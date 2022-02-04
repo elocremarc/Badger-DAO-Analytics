@@ -36,7 +36,7 @@ const EVENTS = {
 const whitelist = [
   "http://localhost:3000",
   "http://localhost:5000",
-  "https://badger-dao-analytics-dashboard.herokuapp.com/",
+  "https://badger-dao-analytics.herokuapp.com/",
 ];
 const corsOptions = {
   origin: function (origin, callback) {
