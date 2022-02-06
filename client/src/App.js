@@ -34,21 +34,40 @@ function App() {
     setStrategy(event.target.value);
   };
 
-  const fetch = async () => {
-    let strategies = await axios.get("/strategies").then((response) => {
-      console.log(response.data);
-      return response.data;
-    });
-    let res = await axios.get("/events");
-    console.log(res.data);
-
-    setStrategies(strategies);
-    setEvents(res.data);
-    setLoading(true);
-  };
   useEffect(() => {
-    fetch();
+    const getStrategies = async () => {
+      let strategies = await axios
+        .get("/strategies", strategy)
+        .then((response) => {
+          console.log(response.data);
+          return response.data;
+        });
+      setStrategies(strategies);
+    };
+    getStrategies();
   }, []);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      setLoading(false);
+      console.log("strategy", strategy);
+      let res = await axios.get("/events", { params: { strategy } });
+      console.log(res.data);
+
+      setEvents(res.data);
+      setLoading(true);
+    };
+
+    getEvents();
+  }, [strategy]);
+
+  // useEffect(() => {
+  //   if (events.length > 0) {
+  //     setRecentEvent(events[events.length - 1]);
+  //     console.log(recentEvent);
+  //   }
+  // }, [recentEvent, events]);
+
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -90,6 +109,7 @@ function App() {
 
                   <Typography variant="body2">
                     <Link
+                      target="_blank"
                       href={`https://etherscan.io/address/${strategies[strategy]}`}
                     >
                       {strategies[strategy]}
@@ -99,7 +119,14 @@ function App() {
               </Card>
             </Item>
             <Item>
-              {loading ? <Graph events={events} /> : <CircularProgress />}
+              {loading ? (
+                <Graph events={events} />
+              ) : (
+                <>
+                  <CircularProgress />
+                  <h3> Analyzing Harvest Events</h3>
+                </>
+              )}
             </Item>
             <Item>
               <FormControl fullWidth>

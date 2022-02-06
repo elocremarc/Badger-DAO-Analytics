@@ -33,12 +33,14 @@ export default function Graph(props) {
       <Area
         type="monotone"
         dataKey="PerformanceFeeGovernanceTotal"
+        name="Fee Governance USD"
         stroke="#ffc658"
         fill="#F2BC1B"
         activeDot={{ r: 8 }}
       />
       <Area
         type="monotone"
+        name="Tree Distribution USD"
         dataKey="TreeDistributionTotal"
         stroke="#82ca9d"
         fill="#82ca9d"
@@ -46,6 +48,7 @@ export default function Graph(props) {
 
       <Area
         type="monotone"
+        name="Gas Spent USD"
         dataKey="gas"
         stroke="red"
         fill="red"
