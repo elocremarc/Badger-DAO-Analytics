@@ -25,17 +25,61 @@ import { Link } from "@mui/material";
 import { SvgIcon } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { Skeleton } from "@mui/material";
+import { ButtonGroup } from "@mui/material";
 
 function App() {
   const [events, setEvents] = useState([]);
+  const [eventsReversed, setEventsReversed] = useState([]);
+  const [eventsRanged, seteventsRanged] = useState([]);
+  const [range, setRange] = useState([]);
   const [loading, setLoading] = useState(false);
   const [recentEvent, setRecentEvent] = useState({});
   const [strategies, setStrategies] = useState([]);
   const [strategy, setStrategy] = useState("native.renCrv");
+  const [button, setButton] = useState("All");
+  const [gasTotal, setGasTotal] = useState(0);
 
   const handleChange = (event) => {
     setStrategy(event.target.value);
   };
+
+  useEffect(() => {
+    let gasTotal = eventsRanged.reduce((total, event) => {
+      return (total += parseFloat(event.gasSpent));
+    }, 0);
+    setGasTotal(gasTotal);
+  }, [eventsRanged]);
+
+  useEffect(() => {
+    if (button === "Week") {
+      let eventsWeek = events.filter((event) =>
+        moment(event.timeStamp).isAfter(
+          moment().subtract(1, "week").startOf("day")
+        )
+      );
+      seteventsRanged(eventsWeek);
+      let eventsRangedReversed = eventsWeek.slice().reverse();
+      setEventsReversed(eventsRangedReversed);
+      console.log("gasTotal", gasTotal);
+      console.log("eventsWeek", eventsWeek);
+    } else if (button === "Month") {
+      let eventsMonth = events.filter((event) =>
+        moment(event.timeStamp).isAfter(
+          moment().subtract(1, "month").startOf("day")
+        )
+      );
+      seteventsRanged(eventsMonth);
+
+      let eventsRangedReversed = eventsMonth.slice().reverse();
+      setEventsReversed(eventsRangedReversed);
+      console.log("eventsMonth", eventsMonth);
+    } else if (button === "All") {
+      seteventsRanged(events);
+      let eventsAll = events.slice().reverse();
+      setEventsReversed(eventsAll);
+      console.log("events", events);
+    }
+  }, [button, strategy]);
 
   useEffect(() => {
     const getStrategies = async () => {
@@ -53,11 +97,18 @@ function App() {
   useEffect(() => {
     const getEvents = async () => {
       setLoading(false);
+      setButton("All");
       console.log("strategy", strategy);
       let res = await axios.get("/events", { params: { strategy } });
       console.log(res.data);
+      let events = res.data;
+      // filter out events that are not in the last month
 
-      setEvents(res.data);
+      setEvents(events);
+      seteventsRanged(events);
+
+      let eventsRangedReversed = events.slice().reverse();
+      setEventsReversed(eventsRangedReversed);
       setLoading(true);
     };
 
@@ -94,121 +145,182 @@ function App() {
           Badger Analytics
         </Typography>
       </Toolbar>
-      <Box sx={{ flexGrow: 4 }}>
-        <Grid container spacing={4}>
-          <Grid item xs={6}>
-            <Item>
-              <Card sx={{ minWidth: 275 }}>
-                <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  ></Typography>
-                  <Typography variant="h5" component="div">
-                    {strategy}
-                  </Typography>
+      <Box mx={2}>
+        {" "}
+        <Box sx={{ flexGrow: 4 }}>
+          <Grid container spacing={4}>
+            <Grid item xs={6}>
+              <Item sx={{ m: 2 }}>
+                <Card sx={{ minWidth: 275 }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {strategy}
+                    </Typography>
 
-                  <Typography variant="body2">
-                    <Link
-                      target="_blank"
-                      href={`https://etherscan.io/address/${strategies[strategy]}`}
+                    <Typography variant="body2">
+                      <Link
+                        target="_blank"
+                        href={`https://etherscan.io/address/${strategies[strategy]}`}
+                      >
+                        {`${strategies[strategy]}`}
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Item>
+              <Item sx={{ m: 2 }}>
+                {loading ? (
+                  <>
+                    <ButtonGroup
+                      variant="contained"
+                      aria-label="outlined primary button group"
                     >
-                      {`${strategies[strategy]}`}
-                    </Link>
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Item>
-            <Item>
+                      {button === "Week" ? (
+                        <Button onClick={() => setButton("Week")}>Week</Button>
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          onClick={() => setButton("Week")}
+                        >
+                          Week
+                        </Button>
+                      )}
+                      {button === "Month" ? (
+                        <Button onClick={() => setButton("Month")}>
+                          Month
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          onClick={() => setButton("Month")}
+                        >
+                          Month
+                        </Button>
+                      )}
+                      {button === "All" ? (
+                        <Button onClick={() => setButton("All")}>All</Button>
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          onClick={() => setButton("All")}
+                        >
+                          All
+                        </Button>
+                      )}
+                    </ButtonGroup>{" "}
+                    <Graph events={eventsRanged} />
+                  </>
+                ) : (
+                  <>
+                    <CircularProgress sx={{ m: 2 }} />
+                    <h3> Analyzing Harvest Events</h3>
+                  </>
+                )}
+              </Item>
+              <Item sx={{ m: 2 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Strategy
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={strategy}
+                    label="Strategy"
+                    onChange={handleChange}
+                  >
+                    {Object.keys(strategies).map((key) => (
+                      <MenuItem value={key}>{key.split(".")[1]}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item sx={{ m: 2 }}>
+                {" "}
+                <Typography variant="h5" component="div">
+                  Harvest Events
+                </Typography>
+              </Item>
               {loading ? (
-                <Graph events={events} />
+                <>
+                  {eventsReversed.map((event) => (
+                    <Item sx={{ m: 2 }}>
+                      <Card>
+                        <CardContent>
+                          <Link
+                            target="_blank"
+                            href={`https://etherscan.io/tx/${event.transactionHash}`}
+                          >
+                            {event.transactionHash.slice(0, 5)}...{" "}
+                            {event.transactionHash.slice(-4)}
+                          </Link>
+                          <Typography sx={{ fontSize: 14 }} component="div">
+                            {event.timeStamp}
+                          </Typography>
+
+                          <Typography sx={{ fontSize: 14 }} component="div">
+                            Tree Distribution{" "}
+                            <NumberFormat
+                              value={event.TreeDistributionTotal}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />
+                          </Typography>
+
+                          <Typography sx={{ fontSize: 14 }} component="div">
+                            Performance Fee Governance{" "}
+                            <NumberFormat
+                              value={event.PerformanceFeeGovernanceTotal}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />
+                          </Typography>
+                          <Typography sx={{ fontSize: 14 }} component="div">
+                            Gas Spent{" "}
+                            <NumberFormat
+                              value={event.gas}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Item>
+                  ))}
+                </>
               ) : (
                 <>
-                  <CircularProgress />
-                  <h3> Analyzing Harvest Events</h3>
+                  <Card sx={{ m: 2 }}>
+                    {" "}
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                  </Card>
+                  <Card sx={{ m: 2 }}>
+                    {" "}
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                  </Card>
+                  <Card sx={{ m: 2 }}>
+                    {" "}
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                    <Skeleton animation="wave" sx={{ m: 2 }} />
+                  </Card>
                 </>
               )}
-            </Item>
-            <Item>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Strategy</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={strategy}
-                  label="Strategy"
-                  onChange={handleChange}
-                >
-                  {Object.keys(strategies).map((key) => (
-                    <MenuItem value={key}>{key.split(".")[1]}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Item>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {loading ? (
-              <>
-                {events.reverse().map((event) => (
-                  <Item>
-                    <Card>
-                      <CardContent>
-                        <Link
-                          target="_blank"
-                          href={`https://etherscan.io/tx/${event.transactionHash}`}
-                        >
-                          {event.transactionHash.slice(0, 5)}...{" "}
-                          {event.transactionHash.slice(-4)}
-                        </Link>
-                        <Typography sx={{ fontSize: 14 }} component="div">
-                          {event.timeStamp}
-                        </Typography>
-
-                        <Typography sx={{ fontSize: 14 }} component="div">
-                          Tree Distribution{" "}
-                          <NumberFormat
-                            value={event.TreeDistributionTotal}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />
-                        </Typography>
-
-                        <Typography sx={{ fontSize: 14 }} component="div">
-                          Performance Fee Governance{" "}
-                          <NumberFormat
-                            value={event.PerformanceFeeGovernanceTotal}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />
-                        </Typography>
-                        <Typography sx={{ fontSize: 14 }} component="div">
-                          Gas Spent{" "}
-                          <NumberFormat
-                            value={event.gas}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Item>
-                ))}
-              </>
-            ) : (
-              <>
-                <Card>
-                  {" "}
-                  <Skeleton animation="wave" />
-                  <Skeleton animation="wave" />
-                </Card>
-              </>
-            )}
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
     </div>
   );

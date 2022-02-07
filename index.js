@@ -15,28 +15,12 @@ const testData = require("./dataTest.json");
 
 const app = express();
 
-//todo
-//  native.mstableFpMbtcHbtc
-//  native.mstableImBtc
-//  native.cvx
-//  native.pbtcCrv
-//  experimental.sushiIBbtcWbtc
-//  native.sushiDiggWbtc
-//  native.digg
+//todo Harvest
+//  native.uniBadgerWbtc
+//  harvest.renCrv
 
-//todo harvest
-//  native.sushiWbtcBtc
-//  native.sushiBadgerWbtc
-
-//todo
-//  native.uniDiggWbtc
-
-//todo
-//  experimental.digg
-
-//todo curve.fi price
-//  native.tricrypto
-//  native.tricrypto2
+//todo WithdrawState
+//  harvest.renCrv
 
 // ** MIDDLEWARE ** //
 const whitelist = [
