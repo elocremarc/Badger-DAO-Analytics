@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import Graph from "./Graph";
+import NumberFormat from "react-number-format";
+import moment from "moment";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -22,6 +24,7 @@ import Select from "@mui/material/Select";
 import { Link } from "@mui/material";
 import { SvgIcon } from "@mui/material";
 import { CircularProgress } from "@mui/material";
+import { Skeleton } from "@mui/material";
 
 function App() {
   const [events, setEvents] = useState([]);
@@ -91,10 +94,9 @@ function App() {
           Badger Analytics
         </Typography>
       </Toolbar>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={3}></Grid>
-          <Grid item xs={5}>
+      <Box sx={{ flexGrow: 4 }}>
+        <Grid container spacing={4}>
+          <Grid item xs={6}>
             <Item>
               <Card sx={{ minWidth: 275 }}>
                 <CardContent>
@@ -112,7 +114,7 @@ function App() {
                       target="_blank"
                       href={`https://etherscan.io/address/${strategies[strategy]}`}
                     >
-                      {strategies[strategy]}
+                      {`${strategies[strategy]}`}
                     </Link>
                   </Typography>
                 </CardContent>
@@ -145,7 +147,67 @@ function App() {
               </FormControl>
             </Item>
           </Grid>
-          <Grid item xs={4}></Grid>
+          <Grid item xs={6}>
+            {loading ? (
+              <>
+                {events.reverse().map((event) => (
+                  <Item>
+                    <Card>
+                      <CardContent>
+                        <Link
+                          target="_blank"
+                          href={`https://etherscan.io/tx/${event.transactionHash}`}
+                        >
+                          {event.transactionHash.slice(0, 5)}...{" "}
+                          {event.transactionHash.slice(-4)}
+                        </Link>
+                        <Typography sx={{ fontSize: 14 }} component="div">
+                          {event.timeStamp}
+                        </Typography>
+
+                        <Typography sx={{ fontSize: 14 }} component="div">
+                          Tree Distribution{" "}
+                          <NumberFormat
+                            value={event.TreeDistributionTotal}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />
+                        </Typography>
+
+                        <Typography sx={{ fontSize: 14 }} component="div">
+                          Performance Fee Governance{" "}
+                          <NumberFormat
+                            value={event.PerformanceFeeGovernanceTotal}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} component="div">
+                          Gas Spent{" "}
+                          <NumberFormat
+                            value={event.gas}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Item>
+                ))}
+              </>
+            ) : (
+              <>
+                <Card>
+                  {" "}
+                  <Skeleton animation="wave" />
+                  <Skeleton animation="wave" />
+                </Card>
+              </>
+            )}
+          </Grid>
         </Grid>
       </Box>
     </div>

@@ -30,6 +30,14 @@ export default function Graph(props) {
       <YAxis />
       <Tooltip />
       <Legend />
+
+      <Area
+        type="monotone"
+        name="Tree Distribution USD"
+        dataKey="TreeDistributionTotal"
+        stroke="#82ca9d"
+        fill="#82ca9d"
+      />
       <Area
         type="monotone"
         dataKey="PerformanceFeeGovernanceTotal"
@@ -37,13 +45,6 @@ export default function Graph(props) {
         stroke="#ffc658"
         fill="#F2BC1B"
         activeDot={{ r: 8 }}
-      />
-      <Area
-        type="monotone"
-        name="Tree Distribution USD"
-        dataKey="TreeDistributionTotal"
-        stroke="#82ca9d"
-        fill="#82ca9d"
       />
 
       <Area

@@ -49,6 +49,7 @@ const getSingleEvents = async (
       console.log(err);
     })
     .then((response) => {
+      console.log(response.data);
       {
         response.data.result.forEach((response) => {
           let eventDecoded = decodeLogs(
@@ -76,12 +77,13 @@ const getSingleEvents = async (
           });
         });
         console.log(`${event} events fetched`);
-        // console.log(eventData);
+        //console.log(eventData);
         return eventData;
       }
     });
-  console.timeEnd(`eventFetch`);
 
+  console.timeEnd(`eventFetch`);
+  //  console.log(events[0]);
   return events;
 };
 export default getSingleEvents;

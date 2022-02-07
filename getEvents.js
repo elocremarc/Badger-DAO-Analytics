@@ -2,6 +2,7 @@ import axios from "axios";
 import ethers from "ethers";
 import getblockNumbers from "./utils/getBlockNumbers.js";
 import moment from "moment";
+import commaNumber from "comma-number";
 import getSingleEvents from "./getSingleEvents.js";
 import getTokenPrices from "./getTokenPrices.js";
 import { createRequire } from "module";
@@ -20,20 +21,27 @@ export const provider = new ethers.providers.AlchemyProvider(
 
 const getEvents = async (strategy) => {
   let blockNumbers = await getblockNumbers();
-  let blockLastMonth = blockNumbers.lastMonth;
-
-  let eventTreeDistribution = await getSingleEvents(
-    strategies[strategy],
-    "TreeDistribution",
-    blockLastMonth
-  );
-  let eventPerformanceFeeGovernance = await getSingleEvents(
-    strategies[strategy],
-    "PerformanceFeeGovernance",
-    blockLastMonth
-  );
-  let events = eventTreeDistribution.concat(eventPerformanceFeeGovernance);
-
+  let blockLastMonth = blockNumbers.lastMonth.amount;
+  let events = [];
+  if (strategy === "native.badger") {
+    events = await getSingleEvents(
+      strategies[strategy],
+      "Harvest",
+      blockLastMonth
+    );
+  } else {
+    let eventTreeDistribution = await getSingleEvents(
+      strategies[strategy],
+      "TreeDistribution",
+      blockLastMonth
+    );
+    let eventPerformanceFeeGovernance = await getSingleEvents(
+      strategies[strategy],
+      "PerformanceFeeGovernance",
+      blockLastMonth
+    );
+    events = eventTreeDistribution.concat(eventPerformanceFeeGovernance);
+  }
   const blockEvents = events.reduce(
     (blockEvents, event) => ({
       ...blockEvents,
@@ -49,15 +57,21 @@ const getEvents = async (strategy) => {
   );
 
   let harvestTransactions = [];
-
+  //console.log("blockEvents", Object.entries(blockEvents));
+  let TokenEvents = [];
   Object.entries(blockEvents).forEach(([blockNumber, events]) => {
-    let TokenEvents = events.reduce(
-      (blockEvents, event) => ({
-        ...blockEvents,
-        [event.token]: [...(blockEvents[event.token] || []), event],
-      }),
-      []
-    );
+    if (strategy === "native.badger") {
+      TokenEvents = events;
+      // console.log("token event", TokenEvents);
+    } else {
+      TokenEvents = events.reduce(
+        (blockEvents, event) => ({
+          ...blockEvents,
+          [event.token]: [...(blockEvents[event.token] || []), event],
+        }),
+        []
+      );
+    }
     harvestTransactions.push({
       tokensTransferred: TokenEvents,
       blockNumber: blockNumber,
@@ -65,11 +79,11 @@ const getEvents = async (strategy) => {
       gasSpent: parseFloat(events[0].gasSpent).toFixed(2),
       timeStamp: events[0].timeStamp,
     });
+
     // console.log(TokenEvents);
   });
   console.time("getPrice");
   let tokenPrices = await getTokenPrices();
-
   let harvest = harvestTransactions.map(async (harvestTransaction) => {
     let TreeDistributionTotal = [];
     let PerformanceFeeGovernanceTotal = [];
@@ -110,11 +124,14 @@ const getEvents = async (strategy) => {
         ).toFixed(3);
         // event.amountUnitsEther = amountUnitsEther;
         event.amountUSD = parseFloat(priceUSD * amountUnitsEther).toFixed(3);
-        if (event.event === "TreeDistribution" && event.amountUSD > 0) {
-          TreeDistributionTotal.push(event.amountUSD);
+        if (event.event === "TreeDistribution") {
+          TreeDistributionTotal.push(Math.floor(event.amountUSD));
         }
-        if ((event.event === "PerformanceFeeGovernance", event.amountUSD > 0)) {
-          PerformanceFeeGovernanceTotal.push(event.amountUSD);
+        if (
+          event.event === "PerformanceFeeGovernance" ||
+          event.event === "Harvest"
+        ) {
+          PerformanceFeeGovernanceTotal.push(Math.floor(event.amountUSD));
         }
       });
       return {
@@ -136,7 +153,9 @@ const getEvents = async (strategy) => {
     );
     let priceEthUSD = price[1];
 
-    harvestTransaction["gas"] = priceEthUSD * harvestTransaction.gasSpent;
+    harvestTransaction["gas"] = Math.round(
+      priceEthUSD * harvestTransaction.gasSpent
+    );
 
     harvestTransaction["PerformanceFeeGovernanceTotal"] = promiseTotal[0][
       "PerformanceFeeGovernanceTotal"
@@ -155,7 +174,7 @@ const getEvents = async (strategy) => {
   });
   // timestamp harvest filtered
   harvestFiltered.forEach((harvest) => {
-    harvest.timeStamp = moment(harvest.timeStamp * 1000).format("MM-DD");
+    harvest.timeStamp = moment(harvest.timeStamp * 1000).format("MM/DD/YY");
   });
   // console.log(harvestFiltered);
   return harvestFiltered;
