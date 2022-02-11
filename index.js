@@ -46,8 +46,6 @@ app.get("/tokenDictionary", (req, res) => {
 
 app.get("/events", async (req, res) => {
   let request = req.query;
-  let fromBlock = req.fromBlock;
-  let toBlock = req.toBlock;
   console.log("request", request);
   console.time(`FullEventFetch`);
   let harvestFiltered = await getEvents(request.strategy);

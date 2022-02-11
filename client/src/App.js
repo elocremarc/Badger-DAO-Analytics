@@ -222,7 +222,6 @@ function App() {
                               <br />
                               <b>Gas Spent Total</b>
                             </Typography>
-                            s
                           </Grid>
 
                           <Grid
