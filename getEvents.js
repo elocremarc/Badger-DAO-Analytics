@@ -87,6 +87,8 @@ const getEvents = async (strategy) => {
   let harvest = harvestTransactions.map(async (harvestTransaction) => {
     let TreeDistributionTotal = [];
     let PerformanceFeeGovernanceTotal = [];
+    let TokensTree = [];
+    let TokensFee = [];
     let tokens = Object.keys(harvestTransaction["tokensTransferred"]);
     let blockNumber = harvestTransaction.blockNumber;
     let timeStamp = harvestTransaction.timeStamp;
@@ -122,21 +124,38 @@ const getEvents = async (strategy) => {
         let amountUnitsEther = parseFloat(
           ethers.utils.formatEther(event.amount)
         ).toFixed(3);
-        // event.amountUnitsEther = amountUnitsEther;
-        event.amountUSD = parseFloat(priceUSD * amountUnitsEther).toFixed(3);
+        event.amountUnitsEther = amountUnitsEther;
+        let amountUSD = parseFloat(amountUnitsEther * priceUSD).toFixed(3);
+        event.amountUSD = amountUSD;
         if (event.event === "TreeDistribution") {
           TreeDistributionTotal.push(Math.floor(event.amountUSD));
+          TokensTree.push({
+            tokenName: tokenInfo.name,
+            tokenSymbol: tokenInfo.symbol,
+            address: token,
+            amountUnitsEther,
+            amountUSD,
+          });
         }
         if (
           event.event === "PerformanceFeeGovernance" ||
           event.event === "Harvest"
         ) {
           PerformanceFeeGovernanceTotal.push(Math.floor(event.amountUSD));
+          TokensFee.push({
+            tokenName: tokenInfo.name,
+            tokenSymbol: tokenInfo.symbol,
+            address: token,
+            amountUnitsEther,
+            amountUSD,
+          });
         }
       });
       return {
         PerformanceFeeGovernanceTotal,
         TreeDistributionTotal,
+        TokensTree,
+        TokensFee,
       };
     });
     const promiseTotal = await Promise.all(total);
@@ -152,6 +171,10 @@ const getEvents = async (strategy) => {
       moment(price[0]).isSame(date, "day")
     );
     let priceEthUSD = price[1];
+
+    harvestTransaction["TokensTree"] = TokensTree;
+    harvestTransaction["TokensFee"] = TokensFee;
+    harvestTransaction["id"] = blockNumber;
 
     harvestTransaction["gas"] = Math.round(
       priceEthUSD * harvestTransaction.gasSpent

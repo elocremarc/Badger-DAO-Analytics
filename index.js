@@ -15,13 +15,6 @@ const testData = require("./dataTest.json");
 
 const app = express();
 
-//todo Harvest
-//  native.uniBadgerWbtc
-//  harvest.renCrv
-
-//todo WithdrawState
-//  harvest.renCrv
-
 // ** MIDDLEWARE ** //
 const whitelist = [
   "http://localhost:3000",

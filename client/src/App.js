@@ -4,7 +4,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import Graph from "./Graph";
+import EventTable from "./EventTable";
+import TokenDisplay from "./TokenDisplay";
 import NumberFormat from "react-number-format";
+import BasicModal from "./ModalPopup";
 import moment from "moment";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
@@ -26,6 +29,11 @@ import { SvgIcon } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { Skeleton } from "@mui/material";
 import { ButtonGroup } from "@mui/material";
+import { Divider } from "@mui/material";
+import { color } from "@mui/system";
+import { red } from "@mui/material/colors";
+import { Alert } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 function App() {
   const [events, setEvents] = useState([]);
@@ -35,18 +43,32 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [recentEvent, setRecentEvent] = useState({});
   const [strategies, setStrategies] = useState([]);
-  const [strategy, setStrategy] = useState("native.renCrv");
+  const [strategy, setStrategy] = useState("native.tbtcCrv");
   const [button, setButton] = useState("All");
   const [gasTotal, setGasTotal] = useState(0);
-
+  const [feeGovernanceTotal, setFeeGovernanceTotal] = useState(0);
+  const [treeTotal, setTreeTotal] = useState(0);
+  const [tokenDictionary, setTokenDictionary] = useState([]);
   const handleChange = (event) => {
     setStrategy(event.target.value);
   };
 
   useEffect(() => {
-    let gasTotal = eventsRanged.reduce((total, event) => {
-      return (total += parseFloat(event.gasSpent));
-    }, 0);
+    console.log("useEffect");
+    const calcTotal = (dataName) => {
+      return eventsRanged.reduce((total, event) => {
+        return (total += parseFloat(event[dataName]));
+      }, 0);
+    };
+    let gasTotal = calcTotal("gas");
+    let PerformanceFeeGovernanceTotal = calcTotal(
+      "PerformanceFeeGovernanceTotal"
+    );
+    let TreeDistributionTotal = calcTotal("TreeDistributionTotal");
+    console.log("gasTotal", gasTotal);
+
+    setTreeTotal(TreeDistributionTotal);
+    setFeeGovernanceTotal(PerformanceFeeGovernanceTotal);
     setGasTotal(gasTotal);
   }, [eventsRanged]);
 
@@ -102,6 +124,10 @@ function App() {
       let res = await axios.get("/events", { params: { strategy } });
       console.log(res.data);
       let events = res.data;
+      let tokenDictionary = await axios.get("/tokenDictionary");
+      let tokenDictionaryRes = tokenDictionary.data;
+      setTokenDictionary(tokenDictionaryRes);
+
       // filter out events that are not in the last month
 
       setEvents(events);
@@ -149,65 +175,200 @@ function App() {
         {" "}
         <Box sx={{ flexGrow: 4 }}>
           <Grid container spacing={4}>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Item sx={{ m: 2 }}>
                 <Card sx={{ minWidth: 275 }}>
                   <CardContent>
-                    <Typography variant="h5" component="div">
-                      {strategy}
-                    </Typography>
+                    <Grid container justifyContent={"space-around"}>
+                      <Grid item>
+                        <Typography variant="h5" component="div">
+                          {strategy}
+                        </Typography>
+                        <Typography variant="body2">
+                          <Link
+                            target="_blank"
+                            href={`https://etherscan.io/address/${strategies[strategy]}`}
+                          >
+                            {strategies[strategy] ? (
+                              <>
+                                {strategies[strategy].slice(0, 5)}...
+                                {strategies[strategy].slice(-4)}
+                              </>
+                            ) : (
+                              <>"Loading"</>
+                            )}
+                          </Link>
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Grid
+                          sx={{
+                            display: "grid",
+                            gridAutoColumns: "1fr",
+                            gap: 1,
+                          }}
+                          container
+                        >
+                          <Grid
+                            item
+                            sx={{ gridRow: "1", gridColumn: "span 1" }}
+                          >
+                            <Typography
+                              sx={{ fontSize: 14, textAlign: "left" }}
+                            >
+                              <b>Tree Distribution Total </b>
+                              <br />
+                              <b>Performance Fee Total </b>
+                              <br />
+                              <b>Gas Spent Total</b>
+                            </Typography>
+                            s
+                          </Grid>
 
-                    <Typography variant="body2">
-                      <Link
-                        target="_blank"
-                        href={`https://etherscan.io/address/${strategies[strategy]}`}
-                      >
-                        {`${strategies[strategy]}`}
-                      </Link>
-                    </Typography>
+                          <Grid
+                            item
+                            sx={{ gridRow: "1", gridColumn: "sidebar" }}
+                          >
+                            {loading ? (
+                              <>
+                                {" "}
+                                <Typography
+                                  sx={{ fontSize: 14, textAlign: "right" }}
+                                >
+                                  <NumberFormat
+                                    value={feeGovernanceTotal}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"$"}
+                                  />
+                                  <br />
+                                  {
+                                    <NumberFormat
+                                      value={treeTotal}
+                                      displayType={"text"}
+                                      thousandSeparator={true}
+                                      prefix={"$"}
+                                    />
+                                  }
+                                  <br></br>
+                                  {gasTotal >= feeGovernanceTotal ? (
+                                    <Typography
+                                      sx={{ fontSize: 14, color: "red" }}
+                                    >
+                                      {
+                                        <b>
+                                          <NumberFormat
+                                            value={gasTotal}
+                                            displayType={"text"}
+                                            thousandSeparator={true}
+                                            prefix={"$"}
+                                          />
+                                        </b>
+                                      }
+                                    </Typography>
+                                  ) : (
+                                    <Typography
+                                      sx={{ fontSize: 14, color: "primary" }}
+                                    >
+                                      {
+                                        <NumberFormat
+                                          value={gasTotal}
+                                          displayType={"text"}
+                                          thousandSeparator={true}
+                                          prefix={"$"}
+                                        />
+                                      }
+                                    </Typography>
+                                  )}
+                                </Typography>
+                              </>
+                            ) : (
+                              <>
+                                {" "}
+                                <Grid
+                                  item
+                                  sx={{ gridRow: "1", gridColumn: "4 / 5" }}
+                                >
+                                  <Skeleton sx={{ m: 1 }} />
+                                  <Skeleton sx={{ m: 1 }} />
+                                  <Skeleton sx={{ m: 1 }} />{" "}
+                                </Grid>
+                              </>
+                            )}{" "}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Item>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">
+                              Strategy
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={strategy}
+                              label="Strategy"
+                              onChange={handleChange}
+                            >
+                              {Object.keys(strategies).map((key) => (
+                                <MenuItem value={key}>
+                                  {key.split(".")[1]}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Item>
+                      </Grid>
+                    </Grid>
                   </CardContent>
                 </Card>
               </Item>
               <Item sx={{ m: 2 }}>
                 {loading ? (
                   <>
-                    <ButtonGroup
-                      variant="contained"
-                      aria-label="outlined primary button group"
-                    >
-                      {button === "Week" ? (
-                        <Button onClick={() => setButton("Week")}>Week</Button>
-                      ) : (
-                        <Button
-                          variant="outlined"
-                          onClick={() => setButton("Week")}
-                        >
-                          Week
-                        </Button>
-                      )}
-                      {button === "Month" ? (
-                        <Button onClick={() => setButton("Month")}>
-                          Month
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outlined"
-                          onClick={() => setButton("Month")}
-                        >
-                          Month
-                        </Button>
-                      )}
-                      {button === "All" ? (
-                        <Button onClick={() => setButton("All")}>All</Button>
-                      ) : (
-                        <Button
-                          variant="outlined"
-                          onClick={() => setButton("All")}
-                        >
-                          All
-                        </Button>
-                      )}
-                    </ButtonGroup>{" "}
+                    {" "}
+                    <Box sx={{ m: 2 }}>
+                      <ButtonGroup
+                        variant="contained"
+                        aria-label="outlined primary button group"
+                      >
+                        {button === "Week" ? (
+                          <Button onClick={() => setButton("Week")}>
+                            Week
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            onClick={() => setButton("Week")}
+                          >
+                            Week
+                          </Button>
+                        )}
+                        {button === "Month" ? (
+                          <Button onClick={() => setButton("Month")}>
+                            Month
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            onClick={() => setButton("Month")}
+                          >
+                            Month
+                          </Button>
+                        )}
+                        {button === "All" ? (
+                          <Button onClick={() => setButton("All")}>All</Button>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            onClick={() => setButton("All")}
+                          >
+                            All
+                          </Button>
+                        )}
+                      </ButtonGroup>
+                    </Box>
                     <Graph events={eventsRanged} />
                   </>
                 ) : (
@@ -217,107 +378,21 @@ function App() {
                   </>
                 )}
               </Item>
-              <Item sx={{ m: 2 }}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Strategy
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={strategy}
-                    label="Strategy"
-                    onChange={handleChange}
-                  >
-                    {Object.keys(strategies).map((key) => (
-                      <MenuItem value={key}>{key.split(".")[1]}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Item>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Item sx={{ m: 2 }}>
                 {" "}
                 <Typography variant="h5" component="div">
                   Harvest Events
                 </Typography>
               </Item>
-              {loading ? (
-                <>
-                  {eventsReversed.map((event) => (
-                    <Item sx={{ m: 2 }}>
-                      <Card>
-                        <CardContent>
-                          <Link
-                            target="_blank"
-                            href={`https://etherscan.io/tx/${event.transactionHash}`}
-                          >
-                            {event.transactionHash.slice(0, 5)}...{" "}
-                            {event.transactionHash.slice(-4)}
-                          </Link>
-                          <Typography sx={{ fontSize: 14 }} component="div">
-                            {event.timeStamp}
-                          </Typography>
-
-                          <Typography sx={{ fontSize: 14 }} component="div">
-                            Tree Distribution{" "}
-                            <NumberFormat
-                              value={event.TreeDistributionTotal}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix={"$"}
-                            />
-                          </Typography>
-
-                          <Typography sx={{ fontSize: 14 }} component="div">
-                            Performance Fee Governance{" "}
-                            <NumberFormat
-                              value={event.PerformanceFeeGovernanceTotal}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix={"$"}
-                            />
-                          </Typography>
-                          <Typography sx={{ fontSize: 14 }} component="div">
-                            Gas Spent{" "}
-                            <NumberFormat
-                              value={event.gas}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix={"$"}
-                            />
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Item>
-                  ))}
-                </>
-              ) : (
-                <>
-                  <Card sx={{ m: 2 }}>
-                    {" "}
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                  </Card>
-                  <Card sx={{ m: 2 }}>
-                    {" "}
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                  </Card>
-                  <Card sx={{ m: 2 }}>
-                    {" "}
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                    <Skeleton animation="wave" sx={{ m: 2 }} />
-                  </Card>
-                </>
-              )}
+              <div style={{ height: 400, width: "100%" }}>
+                {loading ? (
+                  <EventTable loading={loading} events={events} />
+                ) : (
+                  <CircularProgress />
+                )}
+              </div>
             </Grid>
           </Grid>
         </Box>
