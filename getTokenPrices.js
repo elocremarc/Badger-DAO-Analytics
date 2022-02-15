@@ -7,6 +7,8 @@ let tokenIds = [
   { coinGeickoID: "digg" },
   { coinGeickoID: "convex-crv" },
   { coinGeickoID: "ethereum" },
+  { coinGeickoID: "xsushi" },
+  { coinGeickoID: "sushi" },
 ];
 
 // get historic prices from coingeiko for tokens in tokenDictionary
@@ -21,6 +23,7 @@ const getTokenPrices = async () => {
     })
       .catch((err) => {
         console.log(err);
+        // return { status: "0", message: "Coingecko API down" };
       })
       .then((response) => {
         // console.log(response.data.prices[0], token.coinGeickoID);

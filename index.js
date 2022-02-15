@@ -5,6 +5,8 @@ import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import getEvents from "./getEvents.js";
+import getTokenPrices from "./getTokenPrices.js";
+import eventsComputePrices from "./eventsComputePrices.js";
 const require = createRequire(import.meta.url);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,9 +50,16 @@ app.get("/events", async (req, res) => {
   let request = req.query;
   console.log("request", request);
   console.time(`FullEventFetch`);
-  let harvestFiltered = await getEvents(request.strategy);
+  let events = await getEvents(request.strategy);
+  if (events.status === "0") {
+    console.log("Error EtherScan API", events.result);
+    res.json(events.result);
+  }
+  console.log("events", events);
+  let tokenPrices = await getTokenPrices();
 
-  res.json(harvestFiltered);
+  let eventsPrices = await eventsComputePrices(events, tokenPrices);
+  res.json(eventsPrices);
   console.timeEnd(`FullEventFetch`);
 });
 

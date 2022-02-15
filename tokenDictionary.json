@@ -61,6 +61,15 @@
     "symbol": "bveCVX",
     "onChainPrice": false
   },
+
+  {
+    "token": "0x8798249c2e607446efb7ad49ec89dd1865ff4272",
+    "underlying": "0x8798249c2e607446efb7ad49ec89dd1865ff4272",
+    "coinGeickoID": "sushi",
+    "name": "xSUSHI",
+    "symbol": "XSUSHI",
+    "onChainPrice": false
+  },
   {
     "token": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
     "underlying": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",

@@ -37,13 +37,14 @@ import { DataGrid } from "@mui/x-data-grid";
 
 function App() {
   const [events, setEvents] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [eventsReversed, setEventsReversed] = useState([]);
   const [eventsRanged, seteventsRanged] = useState([]);
   const [range, setRange] = useState([]);
   const [loading, setLoading] = useState(false);
   const [recentEvent, setRecentEvent] = useState({});
   const [strategies, setStrategies] = useState([]);
-  const [strategy, setStrategy] = useState("native.tbtcCrv");
+  const [strategy, setStrategy] = useState("experimental.sushiIBbtcWbtc");
   const [button, setButton] = useState("All");
   const [gasTotal, setGasTotal] = useState(0);
   const [feeGovernanceTotal, setFeeGovernanceTotal] = useState(0);
@@ -133,8 +134,8 @@ function App() {
       setEvents(events);
       seteventsRanged(events);
 
-      let eventsRangedReversed = events.slice().reverse();
-      setEventsReversed(eventsRangedReversed);
+      setEventsReversed(events.slice().reverse());
+      setTableData(events);
       setLoading(true);
     };
 
@@ -154,14 +155,6 @@ function App() {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
-  const bull = (
-    <Box
-      component="span"
-      sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-    >
-      •
-    </Box>
-  );
 
   return (
     <div className="App">
@@ -387,7 +380,7 @@ function App() {
               </Item>
               <div style={{ height: 400, width: "100%" }}>
                 {loading ? (
-                  <EventTable loading={loading} events={events} />
+                  <EventTable loading={loading} events={tableData} />
                 ) : (
                   <CircularProgress />
                 )}

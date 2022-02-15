@@ -1,4 +1,8 @@
 {
+  "native.sushiBadgerWbtc": "0x3a494D79AA78118795daad8AeFF5825C6c8dF7F1",
+  "experimental.sushiIBbtcWbtc": "0xf4146A176b09C664978e03d28d07Db4431525dAd",
+  "native.sushiDiggWbtc": "0xaa8dddfe7DFA3C3269f1910d89E4413dD006D08a",
+  "native.sushiWbtcEth": "0x7A56d65254705B4Def63c68488C0182968C452ce",
   "native.renCrv": "0x61e16b46F74aEd8f9c2Ec6CB2dCb2258Bdfc7071",
   "native.sbtcCrv": "0xCce0D2d1Eb2310F7e67e128bcFE3CE870A3D3a3d",
   "native.tbtcCrv": "0xAB73Ec65a1Ef5a2e5b56D5d6F36Bee4B2A1D3FFb",
@@ -6,8 +10,6 @@
   "native.pbtcCrv": "0xA9A646668Df5Cec5344941646F5c6b269551e53D",
   "native.obtcCrv": "0x5dd69c6D81f0a403c03b99C5a44Ef2D49b66d388",
   "native.bbtcCrv": "0xF2F3AB09E2D8986fBECbBa59aE838a5418a6680c",
-  "native.cvxCrv": "0x826048381d65a65DAa51342C51d464428d301896",
-  "native.vestedCVX": "0x3ff634ce65cDb8CC0D569D6d1697c41aa666cEA9",
   "native.bcrvIbBTC": "0x6D4BA00Fd7BB73b5aa5b3D6180c6f1B0c89f70D1",
   "native.mimCrv": "0x8DE00c817C595BD5D8caD37c4bE65ed1bB11502F",
   "native.fraxCrv": "0xA4772a2504aCCBEd8Db04F393A21BfA621AC621D"

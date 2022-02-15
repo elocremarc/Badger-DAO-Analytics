@@ -1,3 +1,4 @@
+import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import NumberFormat from "react-number-format";
 import Box from "@mui/material/Box";
@@ -54,6 +55,13 @@ const columns = [
 ];
 
 export default function EventTable(props, loading) {
+  const [sortModel, setSortModel] = React.useState([
+    {
+      field: "timeStamp",
+      sort: "asc",
+    },
+  ]);
+
   console.log("EventTable events", props.events[0]);
   return (
     <Box sx={{ m: 2 }}>
@@ -67,18 +75,20 @@ export default function EventTable(props, loading) {
           <div style={{ flexGrow: 1 }}>
             {loading ? (
               <DataGrid
+                sortModel={sortModel}
+                onSortModelChange={(model) => setSortModel(model)}
                 checkboxSelection
                 components={{
                   Toolbar: GridToolbar,
                 }}
                 rows={props.events}
                 columns={columns}
-                pageSize={10}
+                pageSize={20}
               />
             ) : (
               <>Loading</>
             )}
-          </div>{" "}
+          </div>
         </div>
       </div>
     </Box>
