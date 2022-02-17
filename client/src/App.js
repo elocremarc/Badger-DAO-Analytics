@@ -44,7 +44,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [recentEvent, setRecentEvent] = useState({});
   const [strategies, setStrategies] = useState([]);
-  const [strategy, setStrategy] = useState("experimental.sushiIBbtcWbtc");
+  const [strategy, setStrategy] = useState("native.bcrvIbBTC");
   const [button, setButton] = useState("All");
   const [gasTotal, setGasTotal] = useState(0);
   const [feeGovernanceTotal, setFeeGovernanceTotal] = useState(0);
