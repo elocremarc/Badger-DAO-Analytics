@@ -3,12 +3,16 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import NumberFormat from "react-number-format";
 import Box from "@mui/material/Box";
 import BasicModal from "./ModalPopup";
+import moment from "moment";
 
 const columns = [
   {
     field: "timeStamp",
     headerName: "Date",
     flex: 1,
+    renderCell(params) {
+      return <>{moment(params.value).format("MM/DD/YY")}</>;
+    },
   },
   {
     field: "PerformanceFeeGovernanceTotal",
@@ -58,7 +62,7 @@ export default function EventTable(props, loading) {
   const [sortModel, setSortModel] = React.useState([
     {
       field: "timeStamp",
-      sort: "asc",
+      sort: "desc",
     },
   ]);
 

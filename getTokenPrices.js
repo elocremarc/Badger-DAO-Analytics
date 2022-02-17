@@ -9,6 +9,7 @@ let tokenIds = [
   { coinGeickoID: "ethereum" },
   { coinGeickoID: "xsushi" },
   { coinGeickoID: "sushi" },
+  { coinGeickoID: "tether" },
 ];
 
 // get historic prices from coingeiko for tokens in tokenDictionary

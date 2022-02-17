@@ -1,6 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
 import React, { useState, useEffect } from "react";
+import { ReactComponent as Logo } from "./logo.svg";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import Graph from "./Graph";
@@ -30,7 +30,7 @@ import { CircularProgress } from "@mui/material";
 import { Skeleton } from "@mui/material";
 import { ButtonGroup } from "@mui/material";
 import { Divider } from "@mui/material";
-import { color } from "@mui/system";
+import { color, height } from "@mui/system";
 import { red } from "@mui/material/colors";
 import { Alert } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -160,9 +160,21 @@ function App() {
     <div className="App">
       {/* <Graph events={events} /> */}
       <Toolbar>
-        <Typography variant="h6" noWrap component="div">
-          Badger Analytics
-        </Typography>
+        <Grid
+          container
+          direction="row-reverse"
+          justifyContent="flex-end"
+          alignItems="center"
+        >
+          <Grid item>
+            <Logo style={{ height: 45 }} />
+          </Grid>
+          <Grid item>
+            <Typography variant="h6" noWrap component="div">
+              Badger Analytics
+            </Typography>
+          </Grid>
+        </Grid>
       </Toolbar>
       <Box mx={2}>
         {" "}

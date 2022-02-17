@@ -55,7 +55,6 @@ app.get("/events", async (req, res) => {
     console.log("Error EtherScan API", events.result);
     res.json(events.result);
   }
-  console.log("events", events);
   let tokenPrices = await getTokenPrices();
 
   let eventsPrices = await eventsComputePrices(events, tokenPrices);
@@ -69,6 +68,10 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
+
+process.on("unhandledRejection", (reason) => {
+  console.log("Unhandled Rejection at:", reason.stack || reason);
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, (req, res) => {

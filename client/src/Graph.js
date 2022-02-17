@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import moment from "moment";
 
 export default function Graph(props) {
   const DataFormater = (number) => {
@@ -23,6 +24,10 @@ export default function Graph(props) {
     } else {
       return number.toString();
     }
+  };
+
+  const DateFormater = (date) => {
+    return moment(date).format("MM/DD/YY");
   };
   console.log("Graph events", props.events);
   return (
@@ -39,14 +44,15 @@ export default function Graph(props) {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="timeStamp" />
+        <XAxis tickFormatter={DateFormater} dataKey="timeStamp" />
         <YAxis tickFormatter={DataFormater} />
-        <Tooltip />
+        <Tooltip
+          formatter={(value) => `$${new Intl.NumberFormat("en").format(value)}`}
+        />
         <Legend />
-
         <Area
           type="monotone"
-          name="Tree Distribution USD"
+          name="Tree Distribution"
           dataKey="TreeDistributionTotal"
           stroke="#82ca9d"
           fill="#82ca9d"
@@ -54,15 +60,14 @@ export default function Graph(props) {
         <Area
           type="monotone"
           dataKey="PerformanceFeeGovernanceTotal"
-          name="Fee Governance USD"
+          name="Fee Governance"
           stroke="#ffc658"
           fill="#F2BC1B"
           activeDot={{ r: 8 }}
         />
-
         <Area
           type="monotone"
-          name="Gas Spent USD"
+          name="Gas Spent"
           dataKey="gas"
           stroke="red"
           fill="red"

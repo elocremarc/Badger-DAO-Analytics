@@ -10,7 +10,7 @@ export const EtherScanKEY = process.env.YOUR_ETHERSCAN_API_KEY;
 
 export const provider = new ethers.providers.AlchemyProvider(
   "homestead",
-  "PqGIQyzUNvWoazbLuGeGhRuMHTaO1sRw"
+  "15s0RlsCww6qXyZ9ybBafdITA7h81tA_"
 );
 const contract = new ethers.Contract(
   "0x2B5455aac8d64C14786c3a29858E43b5945819C0",
@@ -46,8 +46,6 @@ const eventsComputePrices = async (events, tokenPrices) => {
       gasSpent: parseFloat(events[0].gasSpent).toFixed(2),
       timeStamp: events[0].timeStamp,
     });
-
-    // console.log(TokenEvents);
   });
   console.time("getPrice");
   let harvest = harvestTransactions.map(async (harvestTransaction) => {
@@ -70,7 +68,6 @@ const eventsComputePrices = async (events, tokenPrices) => {
       let price = tokenPriceHistoric.price.find((price) =>
         moment(price[0]).isSame(date, "day")
       );
-      console.log(tokenInfo.coinGeickoID, "date", date.unix(), "price", price);
       let priceUSD = price[1];
       if (tokenInfo.onChainPrice) {
         let pricePerFullShare = await contract.getPricePerFullShare({
@@ -101,7 +98,6 @@ const eventsComputePrices = async (events, tokenPrices) => {
       //   });
 
       events.forEach((event) => {
-        console.log("events", event);
         if (event.event === "TreeDistribution") {
           TokensTree.push(tokenConvertUnits(event.amount));
         }
@@ -166,7 +162,7 @@ const eventsComputePrices = async (events, tokenPrices) => {
   });
   // timestamp harvest filtered
   harvestFiltered.forEach((harvest) => {
-    harvest.timeStamp = moment(harvest.timeStamp * 1000).format("MM/DD/YY");
+    harvest.timeStamp = moment(harvest.timeStamp * 1000).format("YYYY/MM/DD");
   });
   // console.log(harvestFiltered);
   return harvestFiltered;

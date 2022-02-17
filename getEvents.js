@@ -6,9 +6,6 @@ import getSingleEvents from "./getSingleEvents.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-// todo
-// WithdrawState
-
 const strategies = require("./strategies.json");
 
 const getEvents = async (strategy) => {

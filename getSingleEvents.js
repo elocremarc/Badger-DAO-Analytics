@@ -78,12 +78,6 @@ const getSingleEvents = async (
             event === "TreeDistribution" ||
             event === "PerformanceFeeGovernance"
           ) {
-            console.log(
-              "amount",
-              eventDecoded.amount.toString(),
-              "time",
-              eventDecoded.timeStamp
-            );
             eventDataObject["amount"] = eventDecoded.amount;
             eventDataObject["token"] = eventDecoded.token;
           }
