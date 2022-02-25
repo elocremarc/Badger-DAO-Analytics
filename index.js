@@ -56,7 +56,7 @@ app.get("/events", async (req, res) => {
     res.json(events.result);
   }
   let tokenPrices = await getTokenPrices();
-
+  console.log("event", events[0]);
   let eventsPrices = await eventsComputePrices(events, tokenPrices);
   res.json(eventsPrices);
   console.timeEnd(`FullEventFetch`);

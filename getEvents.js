@@ -35,22 +35,36 @@ const getEvents = async (strategy) => {
       "TreeDistribution",
       blockLastMonth
     );
+
     if (eventTreeDistribution.status === "0") {
       return events;
     } else {
       eventTreeDistribution = eventTreeDistribution.result;
     }
-    let eventPerformanceFeeGovernance = await getSingleEvents(
-      strategies[strategy],
-      "PerformanceFeeGovernance",
-      blockLastMonth
-    );
-    if (eventPerformanceFeeGovernance.status === "0") {
-      return events;
+    let eventPerformanceFeeGovernance;
+    if (strategy === "native.cvxCrv") {
+      eventPerformanceFeeGovernance = await getSingleEvents(
+        strategies[strategy],
+        "Harvest",
+        blockLastMonth
+      );
+      if (eventPerformanceFeeGovernance.status === "0") {
+        return events;
+      } else {
+        eventPerformanceFeeGovernance = eventPerformanceFeeGovernance.result;
+      }
     } else {
-      eventPerformanceFeeGovernance = eventPerformanceFeeGovernance.result;
+      eventPerformanceFeeGovernance = await getSingleEvents(
+        strategies[strategy],
+        "PerformanceFeeGovernance",
+        blockLastMonth
+      );
+      if (eventPerformanceFeeGovernance.status === "0") {
+        return events;
+      } else {
+        eventPerformanceFeeGovernance = eventPerformanceFeeGovernance.result;
+      }
     }
-
     events = eventTreeDistribution.concat(eventPerformanceFeeGovernance);
   }
   return events;

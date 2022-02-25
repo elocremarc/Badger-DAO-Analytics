@@ -66,7 +66,7 @@ const getSingleEvents = async (
             response.topics,
             abi
           );
-          // console.log("Decoded", eventDecoded, "Block", eventDecoded.timeStamp);
+          //console.log("DEcoded", eventDecoded, "Block", eventDecoded.timeStamp);
           let eventDataObject = {};
           if (event === "HarvestState") {
             eventDataObject["amountGovernance"] = eventDecoded.toGovernance;
@@ -80,7 +80,12 @@ const getSingleEvents = async (
           ) {
             eventDataObject["amount"] = eventDecoded.amount;
             eventDataObject["token"] = eventDecoded.token;
+          } else if (event === "Harvest") {
+            eventDataObject["amount"] = eventDecoded.harvested;
+            eventDataObject["token"] =
+              "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7";
           }
+
           let gasPrice = parseInt(response.gasPrice, 16);
           let gasUsed = parseInt(response.gasUsed, 16);
           let gasSpent = ethers.utils.formatEther(
@@ -91,17 +96,16 @@ const getSingleEvents = async (
           eventDataObject["blockNumber"] = parseInt(response.blockNumber, 16);
           eventDataObject["timeStamp"] = parseInt(response.timeStamp, 16);
           eventDataObject["gasSpent"] = gasSpent;
-
           eventData.push(eventDataObject);
         });
         console.log(`${event} events fetched`);
-        //console.log(eventData);
+
         return { status: "1", message: "Sucess", result: eventData };
       }
     });
+  console.log("EVENTSS", events.result[0]);
 
   console.timeEnd(`eventFetch`);
-  //console.log(events[0]);
   return events;
 };
 export default getSingleEvents;
